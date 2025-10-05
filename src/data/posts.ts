@@ -1,0 +1,52 @@
+import { Post } from '@/types';
+
+export const posts: Post[] = [
+  {
+    id: 'elnido-restaurants',
+    sourceUrl: 'https://www.instagram.com/p/C9cr06Vi0CE/',
+    platform: 'instagram',
+    handle: 'via Instagram',
+    place: 'El Nido, Palawan',
+    title: 'Top 5 El Nido Restaurants',
+    tags: ['restaurant', 'food', 'elnido'],
+    images: ['/images/el_nido_1.jpg'],
+    smartSuggestion: 'Lunch times in the Philippines are from 18h or 19h so plan your previous schedule accordingly.',
+  },
+  {
+    id: 'elnido-guide',
+    sourceUrl: 'https://www.instagram.com/reel/DFFs80HOzON/',
+    platform: 'instagram',
+    handle: 'via Instagram',
+    place: 'El Nido, Palawan',
+    title: 'El Nido Quick Guide (Reel)',
+    tags: ['itinerary', 'elnido', 'palawan'],
+    images: ['/images/el_nido_2.jpg'],
+    caption: 'Essential El Nido spots and timing guide for the perfect day',
+    recommendations: [
+      'Big Lagoon (Tour A) — first slot 08:00',
+      'Las Cabañas — sunset ~17:20',
+      'Nacpan Beach — 09:00–12:00 fewer crowds',
+    ],
+    smartSuggestion: 'All tours are from 8h–17h with lunch.',
+  },
+  {
+    id: 'siargao-lifeinthebackpack',
+    sourceUrl: 'https://www.tiktok.com/@lifeinthebackpack/photo/7490481459539479830',
+    platform: 'tiktok',
+    handle: '@lifeinthebackpack',
+    place: 'Siargao',
+    title: 'Travel photo set by @lifeinthebackpack',
+    tags: ['travel'],
+    images: ['/images/siargao_1.jpg'],
+  },
+  {
+    id: 'siargao-maura',
+    sourceUrl: 'https://www.tiktok.com/@maura.erentreich/photo/7465305176425958678',
+    platform: 'tiktok',
+    handle: '@maura.erentreich',
+    place: 'Siargao',
+    title: 'Photo journal by @maura.erentreich',
+    tags: ['travel'],
+    images: ['/images/siargao_2.jpg'],
+  },
+];
