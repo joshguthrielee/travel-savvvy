@@ -101,7 +101,7 @@ export default function Collections() {
                   >
                     <div 
                       className={`overflow-hidden relative ${
-                        viewMode === 'grid' ? 'w-40 h-40' : 'w-30 h-30'
+                        viewMode === 'grid' ? 'aspect-square' : 'w-30 h-30'
                       }`}
                     >
                       <img 
