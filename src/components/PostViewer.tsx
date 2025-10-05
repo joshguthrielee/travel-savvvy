@@ -1,7 +1,7 @@
 import { Post } from '@/types';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Instagram } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
 interface PostViewerProps {
@@ -49,7 +49,7 @@ export const PostViewer = ({ post, open, onOpenChange }: PostViewerProps) => {
             )}
           </div>
 
-          {/* Recommendations */}
+          {/* Travel Recommendations */}
           {post.recommendations && post.recommendations.length > 0 && (
             <div className="space-y-3">
               <h3 className="font-semibold">Travel Recommendations</h3>
@@ -80,9 +80,9 @@ export const PostViewer = ({ post, open, onOpenChange }: PostViewerProps) => {
             <Button variant="outline" size="icon" asChild>
               <a href={post.sourceUrl} target="_blank" rel="noopener noreferrer">
                 {post.platform === 'instagram' ? (
-                  <Instagram className="w-4 h-4" />
+                  <img src="/icons/instagram.svg" alt="Instagram" className="w-4 h-4" />
                 ) : (
-                  <ExternalLink className="w-4 h-4" />
+                  <img src="/icons/tiktok.svg" alt="TikTok" className="w-4 h-4" />
                 )}
               </a>
             </Button>

@@ -5,14 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ChevronLeft, Plus, Grid3x3, List, Wand2 } from 'lucide-react';
 import { trips } from '@/data/trips';
-import { ItineraryItem } from '@/types';
-
-function formatDuration(minutes: number): string {
-  if (minutes < 60) return `${minutes}m`;
-  const hours = Math.floor(minutes / 60);
-  const mins = minutes % 60;
-  return mins > 0 ? `${hours}h ${mins}m` : `${hours}h`;
-}
+import { formatDuration } from '@/lib/utils';
 
 export default function TripDetail() {
   const { id } = useParams();

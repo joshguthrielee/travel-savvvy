@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Search, Grid3x3, List, Instagram } from 'lucide-react';
+import { Search, Grid3x3, List } from 'lucide-react';
 import { posts } from '@/data/posts';
 import { PostViewer } from '@/components/PostViewer';
 import { Post } from '@/types';
@@ -99,7 +99,11 @@ export default function Collections() {
                     onClick={() => setSelectedPost(post)}
                     className="bg-card rounded-2xl overflow-hidden shadow-soft cursor-pointer"
                   >
-                    <div className="aspect-square overflow-hidden relative">
+                    <div 
+                      className={`overflow-hidden relative ${
+                        viewMode === 'grid' ? 'w-40 h-40' : 'w-30 h-30'
+                      }`}
+                    >
                       <img 
                         src={post.images[0]} 
                         alt={post.title}
@@ -107,7 +111,11 @@ export default function Collections() {
                       />
                       <div className="absolute top-2 right-2">
                         <div className="bg-background/90 backdrop-blur-sm rounded-full p-1.5">
-                          <Instagram className="w-3.5 h-3.5" />
+                          <img 
+                            src={post.platform === 'instagram' ? '/icons/instagram.svg' : '/icons/tiktok.svg'} 
+                            alt={post.platform}
+                            className="w-3.5 h-3.5"
+                          />
                         </div>
                       </div>
                     </div>
