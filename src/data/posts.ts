@@ -10,6 +10,14 @@ export const posts: Post[] = [
     title: 'Top 5 El Nido Restaurants',
     tags: ['restaurant', 'food', 'elnido'],
     images: ['/images/el_nido_1.jpg'],
+    caption: 'Best local eats in El Nido! From fresh seafood to traditional Filipino dishes, these spots will make your taste buds dance. 🇵🇭✨',
+    recommendations: [
+      'Artcafe - Fresh seafood & sunset views',
+      'Altrove - Italian-Filipino fusion cuisine',
+      'Happiness Beach Bar - Beachfront dining',
+      'Trattoria Altrove - Authentic wood-fired pizza',
+      'The Alternative - Organic farm-to-table'
+    ],
     smartSuggestion: 'Lunch times in the Philippines are from 18h or 19h so plan your previous schedule accordingly.',
   },
   {
@@ -21,7 +29,7 @@ export const posts: Post[] = [
     title: 'El Nido Quick Guide (Reel)',
     tags: ['itinerary', 'elnido', 'palawan'],
     images: ['/images/el_nido_2.jpg'],
-    caption: 'Essential El Nido spots and timing guide for the perfect day',
+    caption: 'Your ultimate El Nido guide! Hit these spots at the perfect times to avoid crowds and catch the best moments. Save this for your trip! 🏝️',
     recommendations: [
       'Big Lagoon (Tour A) — first slot 08:00',
       'Las Cabañas — sunset ~17:20',

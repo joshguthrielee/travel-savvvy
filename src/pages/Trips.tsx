@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Plus, Calendar } from 'lucide-react';
 import { trips } from '@/data/trips';
+import { toast } from '@/hooks/use-toast';
 
 export default function Trips() {
   return (
@@ -51,6 +52,31 @@ export default function Trips() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                     </svg>
                   </button>
+                </div>
+              )}
+
+              {/* Smart Suggestions with Add buttons */}
+              {trip.smartSuggestions && trip.smartSuggestions.length > 0 && (
+                <div className="bg-accent/10 rounded-xl p-4 space-y-2">
+                  <h3 className="font-semibold text-sm flex items-center gap-2">
+                    <span>💡</span>
+                    Smart Suggestions
+                  </h3>
+                  <div className="space-y-2">
+                    {trip.smartSuggestions.map((suggestion, i) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <span className="text-sm text-foreground/90 flex-1">• {suggestion}</span>
+                        <Button 
+                          size="sm"
+                          variant="outline"
+                          className="h-7 px-3 text-xs"
+                          onClick={() => toast({ description: 'Added to itinerary!' })}
+                        >
+                          Add
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 

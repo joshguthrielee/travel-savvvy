@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { useState } from 'react';
 
 interface PostViewerProps {
   post: Post | null;
@@ -12,6 +13,8 @@ interface PostViewerProps {
 
 export const PostViewer = ({ post, open, onOpenChange }: PostViewerProps) => {
   if (!post) return null;
+
+  const [showFullCaption, setShowFullCaption] = useState(false);
 
   const handleAddToTrip = () => {
     toast({ description: 'Added to trip!' });
@@ -45,7 +48,19 @@ export const PostViewer = ({ post, open, onOpenChange }: PostViewerProps) => {
               by {post.handle}
             </p>
             {post.caption && (
-              <p className="text-sm">{post.caption}</p>
+              <div>
+                <p className={`text-sm ${!showFullCaption ? 'line-clamp-3' : ''}`}>
+                  {post.caption}
+                </p>
+                {post.caption.length > 100 && (
+                  <button 
+                    onClick={() => setShowFullCaption(!showFullCaption)}
+                    className="text-sm text-accent hover:underline mt-1"
+                  >
+                    {showFullCaption ? 'Show less' : 'Show more'}
+                  </button>
+                )}
+              </div>
             )}
           </div>
 
@@ -53,14 +68,22 @@ export const PostViewer = ({ post, open, onOpenChange }: PostViewerProps) => {
           {post.recommendations && post.recommendations.length > 0 && (
             <div className="space-y-3">
               <h3 className="font-semibold">Travel Recommendations</h3>
-              <ul className="space-y-2">
+              <div className="space-y-2">
                 {post.recommendations.map((rec, i) => (
-                  <li key={i} className="text-sm flex gap-2">
-                    <span className="text-accent">•</span>
-                    <span>{rec}</span>
-                  </li>
+                  <div key={i} className="flex items-start gap-2">
+                    <span className="text-accent mt-0.5">•</span>
+                    <span className="flex-1 text-sm">{rec}</span>
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      className="h-7 px-3 text-xs"
+                      onClick={() => toast({ description: 'Added to trip!' })}
+                    >
+                      Add to trip
+                    </Button>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           )}
 

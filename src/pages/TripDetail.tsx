@@ -3,19 +3,38 @@ import { useParams, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Input } from '@/components/ui/input';
 import { ChevronLeft, Plus, Grid3x3, List, Wand2 } from 'lucide-react';
 import { trips } from '@/data/trips';
 import { formatDuration } from '@/lib/utils';
+import { toast } from '@/hooks/use-toast';
+
+const collaborators = [
+  { id: '1', name: 'Josh', role: 'Owner', avatar: '/api/avatar?name=Josh' },
+  { id: '2', name: 'Alex', role: 'Editor', avatar: '/api/avatar?name=Alex' },
+  { id: '3', name: 'Mia', role: 'Viewer', avatar: '/api/avatar?name=Mia' },
+];
+
+const getInitials = (name: string) => {
+  return name.split(' ').map(n => n[0]).join('').toUpperCase();
+};
 
 export default function TripDetail() {
   const { id } = useParams();
   const [viewMode, setViewMode] = useState<'list' | 'kanban'>('list');
+  const [inviteEmail, setInviteEmail] = useState('');
   
   const trip = trips.find(t => t.id === id);
   
   if (!trip) {
     return <div className="p-4">Trip not found</div>;
   }
+
+  const handleSendInvite = () => {
+    if (!inviteEmail.trim()) return;
+    toast({ description: `Invite sent to ${inviteEmail}` });
+    setInviteEmail('');
+  };
 
   return (
     <div className="pb-24 min-h-screen">
@@ -78,13 +97,21 @@ export default function TripDetail() {
                   <span>💡</span>
                   Smart Suggestions
                 </h3>
-                <ul className="space-y-1.5">
+                <div className="space-y-2">
                   {trip.smartSuggestions.map((suggestion, i) => (
-                    <li key={i} className="text-sm text-foreground/90">
-                      • {suggestion}
-                    </li>
+                    <div key={i} className="flex items-start gap-2">
+                      <span className="text-sm text-foreground/90 flex-1">• {suggestion}</span>
+                      <Button 
+                        size="sm"
+                        variant="outline"
+                        className="h-7 px-3 text-xs"
+                        onClick={() => toast({ description: 'Added to itinerary!' })}
+                      >
+                        Add
+                      </Button>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             )}
 
@@ -156,10 +183,66 @@ export default function TripDetail() {
             )}
           </TabsContent>
 
-          <TabsContent value="collab" className="mt-6">
-            <p className="text-sm text-muted-foreground text-center py-8">
-              Collaboration features coming soon
-            </p>
+          <TabsContent value="collab" className="mt-6 space-y-4">
+            {/* Collaborators List */}
+            <div className="space-y-3">
+              <h3 className="font-semibold text-sm">Collaborators</h3>
+              {collaborators.map(collaborator => (
+                <div key={collaborator.id} className="flex items-center gap-3 p-3 bg-card rounded-xl shadow-soft">
+                  <div 
+                    className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-medium border-2 border-background"
+                    style={{
+                      backgroundImage: collaborator.avatar ? `url(${collaborator.avatar})` : 'none',
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center'
+                    }}
+                    onError={(e) => {
+                      const target = e.currentTarget as HTMLDivElement;
+                      target.style.backgroundImage = 'none';
+                      target.textContent = getInitials(collaborator.name);
+                    }}
+                  >
+                    {!collaborator.avatar && getInitials(collaborator.name)}
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-medium text-sm">{collaborator.name}</p>
+                    <Badge variant="outline" className="text-xs h-5 mt-0.5">
+                      {collaborator.role}
+                    </Badge>
+                  </div>
+                  {collaborator.role === 'Owner' && (
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      className="text-xs"
+                      onClick={() => toast({ description: 'Cannot remove owner' })}
+                    >
+                      Remove
+                    </Button>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Invite Section */}
+            <div className="space-y-3">
+              <h3 className="font-semibold text-sm">Invite</h3>
+              <div className="flex gap-3">
+                <Input
+                  type="email"
+                  placeholder="Enter email address"
+                  value={inviteEmail}
+                  onChange={(e) => setInviteEmail(e.target.value)}
+                  className="flex-1 h-11"
+                />
+                <Button 
+                  onClick={handleSendInvite}
+                  className="h-11"
+                >
+                  Send invite
+                </Button>
+              </div>
+            </div>
           </TabsContent>
         </Tabs>
       </div>

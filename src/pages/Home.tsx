@@ -5,7 +5,9 @@ import { Input } from '@/components/ui/input';
 import { Plus, ArrowRight } from 'lucide-react';
 import { posts } from '@/data/posts';
 import { trips } from '@/data/trips';
+import { libraryItineraries } from '@/data/library';
 import { toast } from '@/hooks/use-toast';
+import { Badge } from '@/components/ui/badge';
 
 export default function Home() {
   const [linkInput, setLinkInput] = useState('');
@@ -16,8 +18,8 @@ export default function Home() {
     setLinkInput('');
   };
 
-  // Get first 2 posts for explore teaser
-  const explorePosts = posts.slice(0, 2);
+  // Get first 2 library itineraries for explore teaser (same as Explore screen)
+  const exploreItineraries = libraryItineraries.slice(0, 2);
   
   // Get first 6 posts for collections carousel
   const collectionPosts = posts.slice(0, 6);
@@ -71,14 +73,37 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            {explorePosts.map(post => (
-              <div key={post.id} className="bg-card rounded-2xl overflow-hidden shadow-soft">
-                <div className="aspect-square overflow-hidden">
-                  <img src={post.images[0]} alt={post.title} className="w-full h-full object-cover" />
+            {exploreItineraries.map(itinerary => (
+              <div key={itinerary.id} className="bg-card rounded-2xl overflow-hidden shadow-soft">
+                <div className="aspect-square overflow-hidden relative">
+                  <img 
+                    src={itinerary.coverImage} 
+                    alt={itinerary.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-2 right-2">
+                    <Badge variant="secondary" className="bg-background/90 backdrop-blur-sm">
+                      {itinerary.duration}
+                    </Badge>
+                  </div>
                 </div>
-                <div className="p-3">
-                  <h3 className="font-semibold text-sm line-clamp-2">{post.title}</h3>
-                  <p className="text-xs text-muted-foreground mt-1">{post.place}</p>
+                <div className="p-3 space-y-2">
+                  <h3 className="font-semibold text-sm line-clamp-2">{itinerary.title}</h3>
+                  <div className="flex gap-1.5 flex-wrap">
+                    {itinerary.vibes.slice(0, 2).map(vibe => (
+                      <Badge key={vibe} variant="outline" className="text-xs">
+                        {vibe}
+                      </Badge>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-2 mt-2">
+                    <img 
+                      src={itinerary.creatorAvatar} 
+                      alt={itinerary.creatorName}
+                      className="w-5 h-5 rounded-full"
+                    />
+                    <span className="text-xs text-muted-foreground">{itinerary.creatorName}</span>
+                  </div>
                 </div>
               </div>
             ))}
